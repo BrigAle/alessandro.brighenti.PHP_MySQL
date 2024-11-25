@@ -39,12 +39,11 @@
                         <li><a href="Info.php">Informazioni</a></li>
                         <li><a href="Contatti.php">Contatti</a></li>
                         <li><a href="Galleria.php">Galleria</a></li>
-                        <li><a href="Login.php">Login</a></li>
-                        <li><a href="Logout.php">Logout</a></li>     
+                        <li><a href="loginPage.php">Login</a></li>
+                        <li><a href="loginPage.php">Logout</a></li>     
                     </ul>
                 </div>
             </div>
-
             <!-- Contenuto principale -->
             <div style="margin: 10px;">
                 <h1>Dove si trova castel porziano</h1>

@@ -2,7 +2,7 @@
 session_start();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,7 +12,7 @@ session_start();
     <link rel="stylesheet" href="risorse\CSS\style.css" type="text/css" />
 </head>
 
-<body>
+<body style="overflow:hidden">
     <!-- div menu -->
     <div class="menu">
         <a href="Homepage.php">HomePage</a>
@@ -23,9 +23,9 @@ session_start();
         <a href="Logout.php">Logout</a>
     </div>
     <!-- div titolo principale -->
-    <div class="titolo">
-        <h1>Benvenuti a Castelporziano</h1>
-    </div>
+    <!-- <div class="titolo">
+        <h1>Benvenuti a Castel Porziano</h1>
+    </div> -->
     <!-- div contenuto -->
     <div class="wrapper">
         <div class="container">
@@ -38,30 +38,86 @@ session_start();
                         <li><a href="Info.php">Informazioni</a></li>
                         <li><a href="Contatti.php">Contatti</a></li>
                         <li><a href="Galleria.php">Galleria</a></li>
-                        <li><a href="loginPage.php">Login</a></li>
-                        <li><a href="loginPage.php">Logout</a></li>
+                        <?php 
+                            if(!isset($_SESSION['username'])){
+                                echo "<li><a href=\"loginPage.php\">Login</a></li>";
+                            }
+                        ?>
+                        <?php
+                        if (isset($_SESSION['username']) && $_SESSION['logged'] == true) {
+                            echo "<li><a href=\"prenotazione.php\">Prenotazione</a></li>";
+                            if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] == 2) {
+                                echo "<li><a href=\"aggiungiVisita.php\">Aggiungi visita</a></li>";
+                            }
+                            echo "<li><a href=\"risorse/PHP/logout.php\">Logout</a></li>";  
+                        }else{
+                            echo "<li><a href=\"registerPage.php\">Registrati</a></li>";
+                        }
+                        ?>
+
                     </ul>
                 </div>
             </div>
+
             <!-- form di registrazione -->
-            <div class="contenuto">
+            <div class="contenuto-form">
                 <form action="risorse/PHP/register.php" method="POST" class="login-form">
-                    <label for="username" class="form-label"></label>
-                    <input type="text" name="username" id="username" class="form-input" placeholder="Username" required>
+                    
+                        <h2>Registrati</h2>
+                        <!-- Controllo se esistono le variabili di sessione relative agli errori e, se impostate a true,
+                         viene stampato un messaggio di errore corrispondente. -->
+                        <?php
 
-                    <label for="password" class="form-label"></label>
-                    <input type="password" name="password" id="password" class="form-input" placeholder="Password" required>
 
-                    <label for="password2" class="form-label"></label>
-                    <input type="password" name="password2" id="password2" class="form-input" placeholder="Conferma Password" required>
 
-                    <label for="email" class="form-label"></label>
-                    <input type="email" name="email" id="email" class="form-input" placeholder="email" required>
-                    <input type="submit" value="Registrati" class="form-submit">
+                        if (isset($_SESSION['error_email']) &&  $_SESSION['error_email'] == true) {
+                            echo "<h3 class=\"errore\"> Email gia' esistente</h3>";
+                            unset($_SESSION['error_email']);
+                        }
+                        if (isset($_SESSION['error_password']) && $_SESSION['error_password'] == true) {
+                            echo "<h3> Le password non coincidono</h3>";
+                            unset($_SESSION['error_password']);
+                        }
+
+                        ?>
+
+                        <label for="username" class="form-label"></label>
+                        <input type="text" name="username" id="username" class="form-input" placeholder="Username" required>
+                        <?php
+                        if (isset($_SESSION['error_user']) && $_SESSION['error_user'] == true) {
+                            echo "<h3> Username gia' esistente</h3>";
+                            unset($_SESSION['error_user']);
+                        }
+                        ?>
+
+                        <label for="password" class="form-label"></label>
+                        <input type="password" name="password" id="password" class="form-input" placeholder="Password" required>
+                        <label for="password2" class="form-label"></label>
+                        <input type="password" name="password2" id="password2" class="form-input" placeholder="Conferma Password" required>
+                        <?php
+                        if (isset($_SESSION['error_password']) && $_SESSION['error_password'] == true) {
+                            echo "<h3> Le password non coincidono</h3>";
+                            unset($_SESSION['error_password']);
+                        }
+                        ?>
+
+                        <label for="email" class="form-label"></label>
+                        <input type="email" name="email" id="email" class="form-input" placeholder="E-mail" required>
+                        <?php
+                        if (isset($_SESSION['error_email']) &&  $_SESSION['error_email'] == true) {
+                            echo "<h3 class=\"errore\"> Email gia' esistente</h3>";
+                            unset($_SESSION['error_email']);
+                        }
+                        ?>
+                        <input type="submit" value="Registrati" class="form-submit" style="width: 112%;">
+                        <p>Già registrato? Entra <a href="loginPage.php">qui</a></p>
+                    
                 </form>
-                <p>Già registrato? Entra <a href="loginPage.php">qui</a></p>
+
             </div>
 
         </div>
+
     </div>
+
 </body>

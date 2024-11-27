@@ -60,16 +60,19 @@ session_start();
             </div>
 
             <!-- Contenuto principale -->
-            <div style="margin: 10px;">
-                <h1>Dove si trova castel porziano</h1>
-                <a href="https://maps.app.goo.gl/wrJBqR4wP8Fb6nWe8"><img style="border:5px black solid;" ; class="maps" src="risorse/immagini/castelporziano_maps.jpg" alt="" /></a>
-
-                <p>da qui e'possibile accedere a castel porziano dopo aver prenotato la visita al seguente <a href="https://palazzo.quirinale.it/visitapalazzo/prenota.html"> Link </a>
-                    ufficiale del sito</p>
+            <div class="contenuto">
+                <!-- creo un form php per aggiungere una visita selezionabile -->
+                <form action="risorse/PHP/aggiungiVisita.php" method="POST">
+                    <label for="nome">Nome visita:</label>
+                    <input type="text" id="nome" name="nome" required>
+                    <label for="data">Data visita:</label>
+                    <input type="date" id="data" name="data" required>
+                    <label for="ora">Ora visita:</label>
+                    <input type="time" id="ora" name="ora" required>
+                    <input type="submit" value="Aggiungi visita">
             </div>
         </div>
     </div>
-
     <!-- div piè di pagina -->
     <div class="pdp">
         <p>&amp; 2024 Castelporziano.</p>

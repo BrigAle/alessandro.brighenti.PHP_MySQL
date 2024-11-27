@@ -38,10 +38,10 @@ session_start();
                         <li><a href="Info.php">Informazioni</a></li>
                         <li><a href="Contatti.php">Contatti</a></li>
                         <li><a href="Galleria.php">Galleria</a></li>
-                        <?php 
-                            if(!isset($_SESSION['username'])){
-                                echo "<li><a href=\"loginPage.php\">Login</a></li>";
-                            }
+                        <?php
+                        if (!isset($_SESSION['username'])) {
+                            echo "<li><a href=\"loginPage.php\">Login</a></li>";
+                        }
                         ?>
                         <?php
                         if (isset($_SESSION['username']) && $_SESSION['logged'] == true) {
@@ -49,8 +49,8 @@ session_start();
                             if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] == 2) {
                                 echo "<li><a href=\"aggiungiVisita.php\">Aggiungi visita</a></li>";
                             }
-                            echo "<li><a href=\"risorse/PHP/logout.php\">Logout</a></li>";  
-                        }else{
+                            echo "<li><a href=\"risorse/PHP/logout.php\">Logout</a></li>";
+                        } else {
                             echo "<li><a href=\"registerPage.php\">Registrati</a></li>";
                         }
                         ?>
@@ -60,16 +60,23 @@ session_start();
             </div>
 
             <!-- Contenuto principale -->
-            <div style="margin: 10px;">
-                <h1>Dove si trova castel porziano</h1>
-                <a href="https://maps.app.goo.gl/wrJBqR4wP8Fb6nWe8"><img style="border:5px black solid;" ; class="maps" src="risorse/immagini/castelporziano_maps.jpg" alt="" /></a>
+            <div class="contenuto">
+                <form action="prenotazione.php" method="POST">
+                    <label for="data_prenotazione">Seleziona la data della visita:</label>
+                    <input type="date" id="data_prenotazione" name="data_prenotazione" required>
 
-                <p>da qui e'possibile accedere a castel porziano dopo aver prenotato la visita al seguente <a href="https://palazzo.quirinale.it/visitapalazzo/prenota.html"> Link </a>
-                    ufficiale del sito</p>
+                    <label for="tipologia_visita">Seleziona la tipologia di visita:</label>
+                    <select id="tipologia_visita" name="tipologia_visita" required>
+                        <option value="archeologico">Archeologico</option>
+                        <option value="storico-artistico">Storico-Artistico</option>
+                        <option value="naturalistico">Naturalistico</option>
+                    </select>
+
+                    <button type="submit">Prenota</button>
+                </form>
             </div>
         </div>
     </div>
-
     <!-- div piè di pagina -->
     <div class="pdp">
         <p>&amp; 2024 Castelporziano.</p>

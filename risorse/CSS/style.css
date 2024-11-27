@@ -6,24 +6,23 @@ body {
     background-color: cornsilk;
 }
 
-.contenuto {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-.contenuto h2 {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 .wrapper {
     display: flex;
     min-height: 100vh;
 }
 
 .login-form {
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    display: grid;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+    padding: 15px;
+    background-color: aliceblue;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
 }
 
 .form-label {
@@ -41,7 +40,7 @@ body {
 }
 
 .form-submit {
-    width: 100%;
+    width: 110%;
     max-width: 300px;
     padding: 10px;
     background-color: #4CAF50;
@@ -166,14 +165,26 @@ body {
     flex: 1;
     margin: 10px;
     padding: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-
+.contenuto-form {
+    background-color: lightgreen;
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+form h3{
+    font-size: 14px;
+    color: red;
+}
 .contenuto p {
     font-size: 15px;
     padding: 10px;
 }
 
 .contenuto h2 {
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     padding: 10px;
 }

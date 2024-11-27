@@ -1,16 +1,15 @@
 <?php
-    session_start();
+session_start();
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title> Castel Porziano </title>
-    <meta name="author" content="Brighenti"/>
-    <link rel="shortcut icon" href="risorse\immagini\stendardo.ico" type="image/x-ico"/>
-    <link rel="stylesheet" href="risorse\CSS\style.css" type="text/css"/>
+    <meta name="author" content="Brighenti" />
+    <link rel="shortcut icon" href="risorse\immagini\stendardo.ico" type="image/x-ico" />
+    <link rel="stylesheet" href="risorse\CSS\style.css" type="text/css" />
 </head>
 
 <body>
@@ -25,7 +24,7 @@
     </div>
     <!-- div titolo principale -->
     <div class="titolo">
-            <h1>Benvenuti a Castel Porziano</h1>
+        <h1>Benvenuti a Castel Porziano</h1>
     </div>
     <!-- div contenuto -->
     <div class="wrapper">
@@ -39,8 +38,23 @@
                         <li><a href="Info.php">Informazioni</a></li>
                         <li><a href="Contatti.php">Contatti</a></li>
                         <li><a href="Galleria.php">Galleria</a></li>
-                        <li><a href="loginPage.php">Login</a></li>
-                        <li><a href="loginPage.php">Logout</a></li>     
+                        <?php 
+                            if(!isset($_SESSION['username'])){
+                                echo "<li><a href=\"loginPage.php\">Login</a></li>";
+                            }
+                        ?>
+                        <?php
+                        if (isset($_SESSION['username']) && $_SESSION['logged'] == true) {
+                            echo "<li><a href=\"prenotazione.php\">Prenotazione</a></li>";
+                            if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] == 2) {
+                                echo "<li><a href=\"aggiungiVisita.php\">Aggiungi visita</a></li>";
+                            }
+                            echo "<li><a href=\"risorse/PHP/logout.php\">Logout</a></li>";  
+                        }else{
+                            echo "<li><a href=\"registerPage.php\">Registrati</a></li>";
+                        }
+                        ?>
+
                     </ul>
                 </div>
             </div>
@@ -57,7 +71,7 @@
                     Castelporziano è in parte delimitata dalla via Cristoforo Colombo, che collega la capitale ad Ostia,
                     dalla strada statale Pontina e dalla strada statale litoranea Ostia Torvaianica.
                 </p>
-                <img src="risorse/immagini/c_porziano_09.jpg" alt=""/>
+                <img src="risorse/immagini/c_porziano_09.jpg" alt="" />
                 <p>A Castelporziano sono presenti la maggior parte degli ecosistemi costieri tipici dell’ambiente
                     mediterraneo. Si incontrano, infatti, procedendo dal mare verso l’entroterra, un tratto di spiaggia
                     ancora integra, dune recenti sabbiose con le tipiche piante pioniere e colonizzatrici che svolgono
@@ -72,7 +86,7 @@
                     È questo uno degli ultimi lembi, ancora di elevata qualità ambientale, di quelle vaste foreste e dei
                     boschi che un tempo, nell’antichità, si estendevano lungo tutta la costa laziale.
                 </p>
-                <img src="risorse/immagini/c_porziano_10.jpg" alt=""/>
+                <img src="risorse/immagini/c_porziano_10.jpg" alt="" />
                 <p>
                     La particolarità di Castelporziano è soprattutto legata alla compenetrazione del querceto tipico del
                     clima mediterraneo e del querceto tipico del clima continentale. Tra le querce sempreverdi sono
@@ -99,7 +113,7 @@
                     recente censimento ha individuato 29 alberi monumentali tra i più significativi per dimensioni e
                     portamento, appartenenti a 7 specie diverse.
                 </p>
-                <img src="risorse/immagini/c_porziano_11.jpg" style="width: 100%;" alt=""/>
+                <img src="risorse/immagini/c_porziano_11.jpg" style="width: 100%;" alt="" />
 
                 <p>
                     Dal punto di vista biologico ed ecosistemico sono di particolare interesse le “piscine”, specchi di
@@ -113,14 +127,14 @@
                     selvatico.
                 </p>
                 <img src="risorse/immagini/c_porziano_13.jpg"
-                    style="height: 200px; width: 300px; float: left; padding: 10px;" alt=""/>
+                    style="height: 200px; width: 300px; float: left; padding: 10px;" alt="" />
                 <p style="clear: none;">
                     Di particolare interesse zoologico vanno segnalati il cinghiale, che presenta una delle popolazioni
                     più pure tra quelle originarie dell’Italia continentale, il capriolo attribuito alla sottospecie
                     italica (originario del centro-sud Italia e riconosciuto come unità tassonomica distinta dal
                     capriolo europeo) e la lepre italica.
                 </p>
-                <img src="risorse/immagini/c_porziano_12.jpg" style="height: 200px; width: 300px; float: left; padding: 10px; float: right;" alt=""/>
+                <img src="risorse/immagini/c_porziano_12.jpg" style="height: 200px; width: 300px; float: left; padding: 10px; float: right;" alt="" />
                 <p style="clear: none;">
                     La foresta di Castelporziano rappresenta anche un ottimo rifugio per numerose specie ornitiche, sia
                     stanziali che migratorie. Il querceto centenario offre un ambiente idoneo per picchi di varie
@@ -187,9 +201,10 @@
                     comunitarie, attraverso l’individuazione di aree SIC (Siti di Importanza Comunitaria) e ZPS (Zona di
                     Protezione Speciale).</p>
 
+                </div>
             </div>
         </div>
-    </div>
+    
 
     <!-- div piè di pagina -->
     <div class="pdp">

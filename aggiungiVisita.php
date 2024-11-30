@@ -12,7 +12,7 @@ session_start();
     <link rel="stylesheet" href="risorse\CSS\style.css" type="text/css" />
 </head>
 
-<body>
+<body style="overflow: hidden;">
     <!-- div menu -->
     <div class="menu">
         <a href="Homepage.php">HomePage</a>
@@ -23,9 +23,9 @@ session_start();
         <a href="Logout.php">Logout</a>
     </div>
     <!-- div titolo principale -->
-    <div class="titolo">
+    <!-- <div class="titolo">
         <h1>Benvenuti a Castel Porziano</h1>
-    </div>
+    </div> -->
     <!-- div contenuto -->
     <div class="wrapper">
         <div class="container">
@@ -38,10 +38,10 @@ session_start();
                         <li><a href="Info.php">Informazioni</a></li>
                         <li><a href="Contatti.php">Contatti</a></li>
                         <li><a href="Galleria.php">Galleria</a></li>
-                        <?php 
-                            if(!isset($_SESSION['username'])){
-                                echo "<li><a href=\"loginPage.php\">Login</a></li>";
-                            }
+                        <?php
+                        if (!isset($_SESSION['username'])) {
+                            echo "<li><a href=\"loginPage.php\">Login</a></li>";
+                        }
                         ?>
                         <?php
                         if (isset($_SESSION['username']) && $_SESSION['logged'] == true) {
@@ -49,8 +49,8 @@ session_start();
                             if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] == 2) {
                                 echo "<li><a href=\"aggiungiVisita.php\">Aggiungi visita</a></li>";
                             }
-                            echo "<li><a href=\"risorse/PHP/logout.php\">Logout</a></li>";  
-                        }else{
+                            echo "<li><a href=\"risorse/PHP/logout.php\">Logout</a></li>";
+                        } else {
                             echo "<li><a href=\"registerPage.php\">Registrati</a></li>";
                         }
                         ?>
@@ -60,16 +60,50 @@ session_start();
             </div>
 
             <!-- Contenuto principale -->
-            <div class="contenuto">
-                <!-- creo un form php per aggiungere una visita selezionabile -->
-                <form action="risorse/PHP/aggiungiVisita.php" method="POST">
-                    <label for="nome">Nome visita:</label>
-                    <input type="text" id="nome" name="nome" required>
-                    <label for="data">Data visita:</label>
-                    <input type="date" id="data" name="data" required>
-                    <label for="ora">Ora visita:</label>
-                    <input type="time" id="ora" name="ora" required>
-                    <input type="submit" value="Aggiungi visita">
+
+            <div class="contenuto" style="background-color: lightgreen;">
+                <!-- Inserisco un controllo in PHP per verificare se l'utente amministratore è loggato, 
+                        al fine di impedire l'accesso alla pagina senza i giusti permessi. -->
+
+                <?php
+                    if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] == 2):
+                ?>
+                    
+                    <form method="POST" action="risorse/PHP/aggiungiVisita_admin.php" class="login-form">
+                    <h2>Aggiungi Visita</h2>
+                        <label for="data_visita" class="form-label">Data della Visita:</label>
+                        <input type="date" id="data_visita" name="data_visita" required class="form-input">
+
+                        <label for="ora_visita" class="form-label">Ora della Visita:</label>
+                        <input type="time" id="ora_visita" name="ora_visita" required class="form-input">
+
+                        <label for="tipologia_visita" class="form-label">Tipologia:</label>
+                        <select id="tipologia_visita" name="tipologia_visita" required class="form-select">
+                            <option value="Archeologico">Archeologico</option>
+                            <option value="Storico-Artistico">Storico-Artistico</option>
+                            <option value="Naturalistico">Naturalistico</option>
+                        </select>
+                        
+                        <button type="submit" class="form-submit">Aggiungi Visita</button>
+                    <?php
+                        if(isset($_SESSION['visitaAggiunta']) && $_SESSION['visitaAggiunta'] == 'true'){
+                            echo "<h3>Visita aggiunta con successo</h3>";
+                            unset($_SESSION['visitaAggiunta']);
+                        }elseif(isset($_SESSION['visitaAggiunta']) && $_SESSION['visitaAggiunta'] == 'false'){
+                            echo "<h3>Errore nell'aggiunta della visita</h3>";
+                            unset($_SESSION['visitaAggiunta']);
+                        }
+                    ?>
+                    </form>
+                <?php
+                    else: echo "<h2>Non hai i permessi per accedere a questa pagina</h2>";
+                ?>
+
+                <?php
+                    $_SESSION['visitaAggiunta'] = 'true';
+                    endif;
+                ?>
+
             </div>
         </div>
     </div>

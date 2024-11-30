@@ -5,7 +5,6 @@
     $connection = new mysqli($host, $user, $password, $db);
     $username = $connection->real_escape_string($_POST['username']);
     $password = $connection->real_escape_string($_POST['password']);
-
     if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         $check = "SELECT * FROM utente u WHERE u.username = '$username'";
@@ -17,7 +16,7 @@
                 if(password_verify($password, $record['password'])){
                     $_SESSION['username'] = $username;
                     $_SESSION['logged'] = 'true';
-
+                    $_SESSION['id'] = $record['id'];
                     if($record['id_ruolo'] == 2){
                         $_SESSION['ruolo'] = 2;
                         header('Location: ../../Homepage.php');

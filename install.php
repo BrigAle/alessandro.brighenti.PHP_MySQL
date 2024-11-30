@@ -59,7 +59,6 @@ $sql_table_prenotazione = "CREATE TABLE IF NOT EXISTS prenotazione(
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         id_utente INT(6) UNSIGNED,
         id_visita INT(6) UNSIGNED,
-        data DATE NOT NULL,
         FOREIGN KEY (id_utente) REFERENCES utente(id),
         FOREIGN KEY (id_visita) REFERENCES visita(id)
     );";
@@ -84,7 +83,6 @@ if (!mysqli_num_rows($result_admin) > 0) {
 
 
 // inserisco utente brigale con hashing della password
-
 $check_brigale = "SELECT * FROM utente WHERE username = 'brigale';";
 $result_utente = mysqli_query($connection, $check_brigale);
 if (!mysqli_num_rows($result_utente) > 0) {
@@ -92,6 +90,20 @@ if (!mysqli_num_rows($result_utente) > 0) {
     $sql_brigale = "INSERT INTO utente (username, email, password) VALUES ('brigale','brigale@gmail.com','" . $pwd_brigale . "');";
     if ($connection->query($sql_brigale) === FALSE) {
         echo "Errore nell'inserimento dell'utente admin " . $connection->error;
+    }
+}
+
+// inserisco visite
+$visite = [
+    ['nome' => 'Archeologico', 'data' => '2024-11-01', 'ora' => '10:00:00', 'id_utente' => 1],
+    ['nome' => 'Naturalistico', 'data' => '2024-11-02', 'ora' => '11:00:00', 'id_utente' => 1],
+    ['nome' => 'Storico-Artistico', 'data' => '2024-11-03', 'ora' => '12:00:00', 'id_utente' => 1]
+];
+
+foreach ($visite as $visita) {
+    $sql_visita = "INSERT INTO visita (nome, data, ora, id_utente) VALUES ('" . $visita['nome'] . "', '" . $visita['data'] . "', '" . $visita['ora'] . "', " . $visita['id_utente'] . ");";
+    if ($connection->query($sql_visita) === FALSE) {
+        echo "Errore nell'inserimento della visita " . $connection->error;
     }
 }
 $connection->close();

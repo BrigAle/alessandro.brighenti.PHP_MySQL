@@ -1,6 +1,17 @@
 <?php
 session_start();
+$conn = new mysqli('localhost', 'root', '', 'database_homework2');
+
+// Verifica connessione
+if ($conn->connect_error) {
+    die("Connessione fallita: " . $conn->connect_error);
+}
+
+// Recupera le visite disponibili
+$sql = "SELECT * FROM visita ORDER BY data,ora";
+$result = $conn->query($sql);
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
@@ -23,9 +34,9 @@ session_start();
         <a href="Logout.php">Logout</a>
     </div>
     <!-- div titolo principale -->
-    <div class="titolo">
+    <!-- <div class="titolo">
         <h1>Benvenuti a Castel Porziano</h1>
-    </div>
+    </div> -->
     <!-- div contenuto -->
     <div class="wrapper">
         <div class="container">
@@ -60,20 +71,36 @@ session_start();
             </div>
 
             <!-- Contenuto principale -->
-            <div class="contenuto">
-                <form action="prenotazione.php" method="POST">
-                    <label for="data_prenotazione">Seleziona la data della visita:</label>
-                    <input type="date" id="data_prenotazione" name="data_prenotazione" required>
+            <div class="contenuto" style="font-family:Arial, Helvetica, sans-serif; background-color:lightgreen">
+                <?php
+                if (isset($_SESSION['username']) && isset($_SESSION['logged']) && $_SESSION['logged'] == true):
+                    if ($result->num_rows > 0):
+                ?>
+                        <form action="risorse/PHP/prenotazione_utente.php" method="POST" class="">
+                        <h2 style="text-align: center;  background-color:aliceblue; border-radius:5px">Prenota una visita</h2>
+                            <div class="boxVisita">                               
+                                <?php while ($row = $result->fetch_array(MYSQLI_ASSOC)): ?>
+                                    <label class="labelVisita">
+                                        <h3 style="color: black; font-size: large;">
+                                            <?php echo $row['nome']; ?>
+                                        </h3>
+                                        <div class="contenutoLabel">
+                                            <p>Data: <?php echo $row['data']; ?></p>
+                                            <p>Ora: <?php echo $row['ora']; ?></p>
+                                            <input type="radio" name="visita" value="<?php echo $row['id']; ?>" required>
+                                        </div>
+                                    </label>
+                                <?php endwhile; ?>
+                            </div>
+                            <button type="submit" class = "submit-button">Prenota</button>
+                        </form>
+                    <?php
+                    else: echo "<p>Nessuna visita disponibile</p>";
+                    ?>
+                    <?php endif; ?>
+                <?php else: echo "<p>Devi essere loggato per prenotare una visita</p>" ?>
+                <?php endif; ?>
 
-                    <label for="tipologia_visita">Seleziona la tipologia di visita:</label>
-                    <select id="tipologia_visita" name="tipologia_visita" required>
-                        <option value="archeologico">Archeologico</option>
-                        <option value="storico-artistico">Storico-Artistico</option>
-                        <option value="naturalistico">Naturalistico</option>
-                    </select>
-
-                    <button type="submit">Prenota</button>
-                </form>
             </div>
         </div>
     </div>

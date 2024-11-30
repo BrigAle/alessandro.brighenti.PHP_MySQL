@@ -53,6 +53,86 @@ body {
 .form-submit:hover {
     background-color: #45a049;
 }
+.form-select {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 16px;
+}
+
+.form-select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.labelVisita {
+    background-color: lightskyblue;
+    display: block;
+    width: calc(33.333% - 15px);
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s, border-color 0.3s;
+    cursor: pointer;
+}
+.contenutoLabel{
+    background-color: floralwhite;
+    pointer-events: none;
+}
+
+
+.labelVisita:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color:cornflowerblue;
+}
+
+.labelVisita:active {
+    border-color: skyblue;
+    background-color: #d1e7ff;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
+    transform: scale(1.03);
+}
+
+.labelVisita:checked + label {
+    border-color: #007bff;
+    background-color: lightblue;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
+    transform: scale(1.03);
+}
+
+input[type="radio"] {
+    width: 30px;
+    height: 30px;
+}
+.submit-button {
+    display: block;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 300px;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.02);
+}
+
+.submit-button:active {
+    background-color: #004494;
+    transform: scale(1.03);
+}
 
 /* stile menu' in alto */
 .menu {
@@ -67,6 +147,12 @@ body {
     width: 100%;
     z-index: 10;
 }
+.boxVisita{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
 
 .menu a {
     color: white;

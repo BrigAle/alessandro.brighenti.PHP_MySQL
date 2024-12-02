@@ -67,16 +67,15 @@ session_start();
 
                     <label for="username" class="form-label"></label>
                     <input type="text" name="username" id="username" placeholder="Username" class="form-input" required>
-                    <?php
-                    if (isset($_SESSION['error_login']) && $_SESSION['error_login'] == true) {
-                        echo "<h3>Utente non registrato</h3>";
-                        unset($_SESSION['error_login']);
-                    }
-                    ?>
+                   
 
                     <label for="password" class="form-label"></label>
                     <input type="password" name="password" id="password" placeholder="Password" class="form-input" required>
                     <?php
+                    if (isset($_SESSION['error_username']) && $_SESSION['error_username'] == true) {
+                         echo "<h3>Utente non registrato</h3>";
+                         unset($_SESSION['error_username']);
+                    }
                     if (isset($_SESSION['error_password']) && $_SESSION['error_password'] == true) {
                         echo "<h3>Password errata</h3>";
                         unset($_SESSION['error_password']);
@@ -87,7 +86,7 @@ session_start();
                     }
                     ?>
                     <input type="submit" value="Login" class="form-submit" style = "width:110%">
-                    <p>Non sei registrato? Registrati <a href="registerPage.php">qui</a></p>
+                    <h3 style = " color: green">Non sei ancora registrato?<br><a href="loginPage.php"> Registrati qui</a></h3>
                 </form>
                 
             </div>

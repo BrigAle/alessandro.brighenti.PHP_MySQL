@@ -62,7 +62,7 @@ session_start();
             <!-- Contenuto principale -->
             <div style="margin: 10px;">
                 <h1>Dove si trova castel porziano</h1>
-                <a href="https://maps.app.goo.gl/wrJBqR4wP8Fb6nWe8"><img style="border:5px black solid;" ; class="maps" src="risorse/immagini/castelporziano_maps.jpg" alt="" /></a>
+                <a href="https://maps.app.goo.gl/wrJBqR4wP8Fb6nWe8"><img style="border:5px black solid;" class="maps" src="risorse/immagini/castelporziano_maps.jpg" alt="" /></a>
 
                 <p>da qui e'possibile accedere a castel porziano dopo aver prenotato la visita al seguente <a href="https://palazzo.quirinale.it/visitapalazzo/prenota.html"> Link </a>
                     ufficiale del sito</p>

@@ -67,7 +67,8 @@ if ($connection->connect_error) {
 
             <!-- Contenuto principale -->
             <div class="contenuto" style="font-family:Arial, Helvetica, sans-serif; background-color:lightgreen">
-                <?php
+            <?php if (isset($_SESSION['username']) && isset($_SESSION['logged']) && $_SESSION['logged'] == true):
+                
                 $id = $_SESSION['id'];
                 // query per selezionare le prenotazioni effettuate dall'utente loggato
                 // eseguo un join tra la tabella prenotazione e la tabella visita per ottenere i dati relativi alla prenotazione
@@ -79,32 +80,37 @@ if ($connection->connect_error) {
                 $result = $connection->query($queryP);
                 //se il risultato non e' negativo e il numero di record trovati dalla query e' maggiore di 0 allora stampo i dati
                 if ($result && $result->num_rows > 0):
-
+                    if (isset($_SESSION['delete'])) {
+                        echo "<h2>" . $_SESSION['delete'] . "</h2>";
+                        unset($_SESSION['delete']);
+                    }
                     //ciclo per stampare i dati
+                echo "<div class=\"box_prenotazione\">";
                     while ($row = $result->fetch_array(MYSQLI_ASSOC)):
                 ?>
-                        <div class="box_prenotazione">
+                        <div class="contenuto_prenotazione">
                             <p>Nome visita: <?= htmlspecialchars($row['nome']); ?></p>
                             <p>Data: <?= htmlspecialchars($row['data']); ?></p>
                             <p>Ora: <?= htmlspecialchars($row['ora']); ?></p>
-                        </div>
+                        
                         <!--    Creo un form con un campo hidden che invia l'ID della prenotazione al file eliminaPrenotazione.php 
                                 quando l'utente clicca su "Elimina".  -->
                         <form action="risorse/PHP/eliminaPrenotazione.php" method="POST">
                             <input type="hidden" name="id_prenotazione" value="<?= htmlspecialchars($row['id_prenotazione']); ?>">
                             <input type="submit" value="Elimina prenotazione">
                         </form>
-
+                        </div>
                 <?php
                     endwhile;
+                echo "</div>";
                 else:
-                    echo "<p>Non ci sono prenotazioni.</p>";
+                    echo "<h3>Non ci sono prenotazioni.</h3>";
                 endif;
-                    if (isset($_SESSION['delete'])) {
-                        echo "<h2>" . $_SESSION['delete'] . "</h2>";
-                        unset($_SESSION['delete']);
-                    } ?>
-                
+                     ?>
+            <?php else:
+                echo "<h3> Devi effettuare il login per visualizzare le prenotazioni. </h3>";
+            endif;
+            ?>
             </div>
         </div>
     </div>

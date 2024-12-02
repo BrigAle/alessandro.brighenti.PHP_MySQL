@@ -87,10 +87,10 @@ session_start();
                         <button type="submit" class="form-submit">Aggiungi Visita</button>
                     <?php
                         if(isset($_SESSION['visitaAggiunta']) && $_SESSION['visitaAggiunta'] == 'true'){
-                            echo "<h3 style = color: green;>Visita aggiunta con successo</h3>";
+                            echo "<h3 style='color: green;'>Visita aggiunta con successo</h3>";
                             unset($_SESSION['visitaAggiunta']);
                         }elseif(isset($_SESSION['visitaAggiunta']) && $_SESSION['visitaAggiunta'] == 'false'){
-                            echo "<h3 style = color: red;>Errore nell'aggiunta della visita</h3>";
+                            echo "<h3 style='color: red;'>Visita aggiunta con successo</h3>";
                             unset($_SESSION['visitaAggiunta']);
                         }
                     ?>

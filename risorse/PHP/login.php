@@ -4,7 +4,8 @@
 
     $connection = new mysqli($host, $user, $password, $db);
     // prendo i dati dal form e li salvo in variabili
-    // real_escape_string in PHP è un metodo della classe mysqli utilizzato per rendere sicuri i dati forniti dagli utenti
+    // real_escape_string in PHP è un metodo della classe mysqli
+    // utilizzato per rendere sicuri i dati forniti dagli utenti
     // prima di utilizzarli in una query SQL. 
     // Questa funzione "esclude" caratteri speciali nei dati in ingresso, rendendoli innocui ed evitando vulnerabilità come l'SQL Injection.
     $username = $connection->real_escape_string($_POST['username']);

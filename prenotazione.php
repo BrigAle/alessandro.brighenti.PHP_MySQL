@@ -100,25 +100,27 @@ $result = $connection->query($queryV);
                             <?php
                             // in questo caso ho scelto assegnare alle variabili di sessione, un messaggio di errore o di successo e, poi stamparlo in questa pagina
                             if (isset($_SESSION['successP'])): ?>
-                                <p style="text-align:center; color: darkgreen;">
+                                <h3 style="text-align:center; color: darkgreen;">
                                     <?php echo $_SESSION['successP']; ?>
-                                </p>
-                                <?php unset($_SESSION['successP']); ?>
+                                </h3>
+                                    <?php unset($_SESSION['successP']); ?>
 
-                            <?php elseif (isset($_SESSION['errorP'])): ?>
-                                <p style="text-align:center; color: red;">
+                            <?php 
+                            elseif (isset($_SESSION['errorP'])): ?>
+                                <h3 style="text-align:center; color: red;">
                                     <?php echo $_SESSION['errorP']; ?>
-                                </p>
-                                <?php unset($_SESSION['errorP']); ?>
-                            <?php endif; ?>
+                                </h3>
+                                    <?php unset($_SESSION['errorP']); ?>
+    
+                            <?php 
+                            endif; ?>
                             <button type="submit" class="submit-button">Prenota</button>
-
                         </form>
                     <?php
-                    else: echo "<p>Nessuna visita disponibile</p>";
+                    else: echo "<h3>Nessuna visita disponibile</h3>";
                     ?>
                     <?php endif; ?>
-                <?php else: echo "<p>Devi essere loggato per prenotare una visita</p>" ?>
+                <?php else: echo "<h3>Devi essere loggato per prenotare una visita</h3>" ?>
                 <?php endif; ?>
 
             </div>

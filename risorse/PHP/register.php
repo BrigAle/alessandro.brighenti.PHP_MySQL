@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result_user = mysqli_query($connection, $check_user);
 
     // myqli_num_rows ritorna il numero di righe nel result
-    // se il numero di righe è maggiore di 0, l'utente esiste già
+    // se il numero di righe è maggiore di 0, l'utente già esiste
 
     if(mysqli_num_rows($result_user) > 0){
         $_SESSION['error_user'] = 'true'; // Setta la variabile di sessione errore_user a true
@@ -40,12 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit(1);
     }
 
-    $sql = "INSERT INTO utente (username, email, password) VALUES ('$username','$email','$hashPassword');";
-    $insert = mysqli_query($connection, $sql);
-
-    header('location:../../loginPage.php');
-
-}else{
-    header('location: ../../registerPage.php');
-    exit(1);
+    $queryR = "INSERT INTO utente (username, email, password) VALUES ('$username','$email','$hashPassword');";
+    $result = mysqli_query($connection, $queryR);
+    if($result){
+        $_SESSION['successP'] = 'true';
+        header('location:../../registerPage.php');
+        exit(0);
+    }else{
+        $_SESSION['successP'] = 'false';
+        header('location: ../../registerPage.php');
+        exit(1);
+    }
 }

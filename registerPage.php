@@ -62,14 +62,18 @@ session_start();
             <!-- form di registrazione -->
             <div class="contenuto-form">
                 <form action="risorse/PHP/register.php" method="POST" class="login-form">
-                    
                         <h2>Registrati</h2>
                         <!-- Controllo se esistono le variabili di sessione relative agli errori e, se impostate a true,
                          viene stampato un messaggio di errore corrispondente. -->
                         <?php
-
-
-
+                        
+                        if(isset($_SESSION['successP']) && $_SESSION['successP'] == true){
+                            echo "<h3 style=\"color: green;\" > Registrazione avvenuta con successo </h3>";
+                            unset($_SESSION['successP']);
+                        }elseif(isset($_SESSION['successP']) && $_SESSION['successP'] == false){
+                            echo "<h3> Errore durante l'invio dei dati nel database </h3>";
+                            unset($_SESSION['successP']);
+                        }
                         if (isset($_SESSION['error_email']) &&  $_SESSION['error_email'] == true) {
                             echo "<h3 class=\"errore\"> Email gia' esistente</h3>";
                             unset($_SESSION['error_email']);
@@ -83,24 +87,25 @@ session_start();
 
                         <label for="username" class="form-label"></label>
                         <input type="text" name="username" id="username" class="form-input" placeholder="Username" required>
-                        <?php
-                        if (isset($_SESSION['error_user']) && $_SESSION['error_user'] == true) {
-                            echo "<h3> Username gia' esistente</h3>";
-                            unset($_SESSION['error_user']);
-                        }
-                        ?>
+                        
 
                         <label for="password" class="form-label"></label>
                         <input type="password" name="password" id="password" class="form-input" placeholder="Password" required>
                         <label for="password2" class="form-label"></label>
                         <input type="password" name="password2" id="password2" class="form-input" placeholder="Conferma Password" required>
                         <?php
+                        if (isset($_SESSION['error_user']) && $_SESSION['error_user'] == true) {
+                            echo "<h3> Username gia' esistente</h3>";
+                            unset($_SESSION['error_user']);
+                        }
+                        ?>
+                        <?php
                         if (isset($_SESSION['error_password']) && $_SESSION['error_password'] == true) {
                             echo "<h3> Le password non coincidono</h3>";
                             unset($_SESSION['error_password']);
                         }
                         ?>
-
+                        
                         <label for="email" class="form-label"></label>
                         <input type="email" name="email" id="email" class="form-input" placeholder="E-mail" required>
                         <?php
@@ -110,7 +115,7 @@ session_start();
                         }
                         ?>
                         <input type="submit" value="Registrati" class="form-submit" style="width: 112%;">
-                        <p>Già registrato? Entra <a href="loginPage.php">qui</a></p>
+                        <h3 style = " color: green">Già registrato?<br><a href="loginPage.php"> Entra qui</a></h3>
                     
                 </form>
 

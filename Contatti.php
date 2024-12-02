@@ -38,19 +38,20 @@ session_start();
                         <li><a href="Info.php">Informazioni</a></li>
                         <li><a href="Contatti.php">Contatti</a></li>
                         <li><a href="Galleria.php">Galleria</a></li>
-                        <?php 
-                            if(!isset($_SESSION['username'])){
-                                echo "<li><a href=\"loginPage.php\">Login</a></li>";
-                            }
+                        <?php
+                        if (!isset($_SESSION['username'])) {
+                            echo "<li><a href=\"loginPage.php\">Login</a></li>";
+                        }
                         ?>
                         <?php
                         if (isset($_SESSION['username']) && $_SESSION['logged'] == true) {
-                            echo "<li><a href=\"prenotazione.php\">Prenotazione</a></li>";
+                            echo "<li><a href=\"prenotazione.php\">Prenota Visita</a></li>";
+                            echo "<li><a href=\"prenotazioniEffettuate.php\">Visualizza Prenotazioni</a></li>";
                             if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] == 2) {
                                 echo "<li><a href=\"aggiungiVisita.php\">Aggiungi visita</a></li>";
                             }
-                            echo "<li><a href=\"risorse/PHP/logout.php\">Logout</a></li>";  
-                        }else{
+                            echo "<li><a href=\"risorse/PHP/logout.php\">Logout</a></li>";
+                        } else {
                             echo "<li><a href=\"registerPage.php\">Registrati</a></li>";
                         }
                         ?>

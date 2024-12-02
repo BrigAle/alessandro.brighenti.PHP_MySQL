@@ -10,8 +10,6 @@ if ($connection->connect_error) {
     exit("Connessione al server fallita: " . $connection->connect_error);
 }
 
-
-
 // creo il database
 $sql_db = "CREATE DATABASE IF NOT EXISTS $db";
 if ($connection->query($sql_db) === FALSE) {
@@ -21,14 +19,14 @@ if ($connection->query($sql_db) === FALSE) {
 // dichiaro la variabile per la connessione al database
 $connection = new mysqli($host, $user, $password, $db);
 
-// controllo se la connessione al database è andata a buon fine
+// controllo se la connessione al database  andata a buon fine
 if ($connection->connect_error) {
     exit("Connessione al database fallita: " . $connection->connect_error);
 }
 
-
 // creo tabella utente
-// id ruolo 1 = utente normale 2 = admin
+// id ruolo = 1 per ogni utente normale 
+// id ruolo = 2 solo per l'admin creato in fase di installazione del database
 $sql_table_utente = "CREATE TABLE IF NOT EXISTS utente(
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(30) NOT NULL,
@@ -41,7 +39,7 @@ if ($connection->query($sql_table_utente) === FALSE) {
     echo "Errore nella creazione della tabella " . $connection->error;
 }
 
-// creo tabella visita, aggiungo una chiave surrogata id utente per poter aggiungere tipologie di visite
+// creo tabella visita, aggiungo una chiave surrogata id utente per poter aggiungere visite quando si è loggati come admin
 $sql_table_visita = "CREATE TABLE IF NOT EXISTS visita(
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(30) NOT NULL,
@@ -95,17 +93,20 @@ if (!mysqli_num_rows($result_utente) > 0) {
 
 // inserisco visite
 $visite = [
-    ['nome' => 'Archeologico', 'data' => '2024-11-01', 'ora' => '10:00:00', 'id_utente' => 1],
-    ['nome' => 'Naturalistico', 'data' => '2024-11-02', 'ora' => '11:00:00', 'id_utente' => 1],
-    ['nome' => 'Storico-Artistico', 'data' => '2024-11-03', 'ora' => '12:00:00', 'id_utente' => 1]
+    ['nome' => 'Archeologico', 'data' => '2025-01-05', 'ora' => '10:00:00', 'id_utente' => 1],
+    ['nome' => 'Naturalistico', 'data' => '2025-02-02', 'ora' => '10:00:00', 'id_utente' => 1],
+    ['nome' => 'Storico-Artistico', 'data' => '2025-03-02', 'ora' => '10:00:00', 'id_utente' => 1]
 ];
-
+// creo un ciclo foreach per inserire le visite nel database
 foreach ($visite as $visita) {
     $sql_visita = "INSERT INTO visita (nome, data, ora, id_utente) VALUES ('" . $visita['nome'] . "', '" . $visita['data'] . "', '" . $visita['ora'] . "', " . $visita['id_utente'] . ");";
     if ($connection->query($sql_visita) === FALSE) {
         echo "Errore nell'inserimento della visita " . $connection->error;
     }
 }
+// chiudo la connessione e reindirizzo alla homepage
 $connection->close();
 header('location: Homepage.php');
 exit(1);
+
+?>

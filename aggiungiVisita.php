@@ -45,7 +45,8 @@ session_start();
                         ?>
                         <?php
                         if (isset($_SESSION['username']) && $_SESSION['logged'] == true) {
-                            echo "<li><a href=\"prenotazione.php\">Prenotazione</a></li>";
+                            echo "<li><a href=\"prenotazione.php\">Prenota Visita</a></li>";
+                            echo "<li><a href=\"prenotazioniEffettuate.php\">Visualizza Prenotazioni</a></li>";
                             if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] == 2) {
                                 echo "<li><a href=\"aggiungiVisita.php\">Aggiungi visita</a></li>";
                             }
@@ -62,13 +63,12 @@ session_start();
             <!-- Contenuto principale -->
 
             <div class="contenuto" style="background-color: lightgreen;">
+
                 <!-- Inserisco un controllo in PHP per verificare se l'utente amministratore è loggato, 
                         al fine di impedire l'accesso alla pagina senza i giusti permessi. -->
-
                 <?php
                     if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] == 2):
                 ?>
-                    
                     <form method="POST" action="risorse/PHP/aggiungiVisita_admin.php" class="login-form">
                     <h2>Aggiungi Visita</h2>
                         <label for="data_visita" class="form-label">Data della Visita:</label>
@@ -87,20 +87,16 @@ session_start();
                         <button type="submit" class="form-submit">Aggiungi Visita</button>
                     <?php
                         if(isset($_SESSION['visitaAggiunta']) && $_SESSION['visitaAggiunta'] == 'true'){
-                            echo "<h3>Visita aggiunta con successo</h3>";
+                            echo "<h3 style = color: green;>Visita aggiunta con successo</h3>";
                             unset($_SESSION['visitaAggiunta']);
                         }elseif(isset($_SESSION['visitaAggiunta']) && $_SESSION['visitaAggiunta'] == 'false'){
-                            echo "<h3>Errore nell'aggiunta della visita</h3>";
+                            echo "<h3 style = color: red;>Errore nell'aggiunta della visita</h3>";
                             unset($_SESSION['visitaAggiunta']);
                         }
                     ?>
                     </form>
                 <?php
                     else: echo "<h2>Non hai i permessi per accedere a questa pagina</h2>";
-                ?>
-
-                <?php
-                    $_SESSION['visitaAggiunta'] = 'true';
                     endif;
                 ?>
 

@@ -1,15 +1,15 @@
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', '', 'database_homework2');
+$connection = new mysqli('localhost', 'root', '', 'database_homework2');
 
 // Verifica connessione
-if ($conn->connect_error) {
-    die("Connessione fallita: " . $conn->connect_error);
+if ($connection->connect_error) {
+    die("Connessione fallita: " . $connection->connect_error);
 }
 
 // Recupera le visite disponibili
-$sql = "SELECT * FROM visita ORDER BY data,ora";
-$result = $conn->query($sql);
+$queryV = "SELECT id AS id_visita, nome, ora, data FROM visita ORDER BY data,ora";
+$result = $connection->query($queryV);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -56,7 +56,8 @@ $result = $conn->query($sql);
                         ?>
                         <?php
                         if (isset($_SESSION['username']) && $_SESSION['logged'] == true) {
-                            echo "<li><a href=\"prenotazione.php\">Prenotazione</a></li>";
+                            echo "<li><a href=\"prenotazione.php\">Prenota Visita</a></li>";
+                            echo "<li><a href=\"prenotazioniEffettuate.php\">Visualizza Prenotazioni</a></li>";
                             if (isset($_SESSION['ruolo']) && $_SESSION['ruolo'] == 2) {
                                 echo "<li><a href=\"aggiungiVisita.php\">Aggiungi visita</a></li>";
                             }
@@ -76,9 +77,12 @@ $result = $conn->query($sql);
                 if (isset($_SESSION['username']) && isset($_SESSION['logged']) && $_SESSION['logged'] == true):
                     if ($result->num_rows > 0):
                 ?>
+                    <!-- Creo un form a blocchi in stile wrap ovvero: gli elementi figli vanno a capo e si dispongono su righe successive quando non c'è abbastanza spazio.  
+                            e invio l'id della visita al file prenotazione_utente.php-->
                         <form action="risorse/PHP/prenotazione_utente.php" method="POST" class="">
-                        <h2 style="text-align: center;  background-color:aliceblue; border-radius:5px">Prenota una visita</h2>
-                            <div class="boxVisita">                               
+                            <h2 style="text-align: center;  background-color:aliceblue; border-radius:5px">Prenota una visita</h2>
+                            <div class="boxVisita">
+                                <!-- ciclo while in cui vengono estratti i record dalla query $queryV -->
                                 <?php while ($row = $result->fetch_array(MYSQLI_ASSOC)): ?>
                                     <label class="labelVisita">
                                         <h3 style="color: black; font-size: large;">
@@ -87,12 +91,28 @@ $result = $conn->query($sql);
                                         <div class="contenutoLabel">
                                             <p>Data: <?php echo $row['data']; ?></p>
                                             <p>Ora: <?php echo $row['ora']; ?></p>
-                                            <input type="radio" name="visita" value="<?php echo $row['id']; ?>" required>
+                                            <input type="radio" name="id_visita" value="<?php echo $row['id_visita']; ?>" required>
                                         </div>
                                     </label>
                                 <?php endwhile; ?>
                             </div>
-                            <button type="submit" class = "submit-button">Prenota</button>
+                            
+                            <?php
+                            // in questo caso ho scelto assegnare alle variabili di sessione, un messaggio di errore o di successo e, poi stamparlo in questa pagina
+                            if (isset($_SESSION['successP'])): ?>
+                                <p style="text-align:center; color: darkgreen;">
+                                    <?php echo $_SESSION['successP']; ?>
+                                </p>
+                                <?php unset($_SESSION['successP']); ?>
+
+                            <?php elseif (isset($_SESSION['errorP'])): ?>
+                                <p style="text-align:center; color: red;">
+                                    <?php echo $_SESSION['errorP']; ?>
+                                </p>
+                                <?php unset($_SESSION['errorP']); ?>
+                            <?php endif; ?>
+                            <button type="submit" class="submit-button">Prenota</button>
+
                         </form>
                     <?php
                     else: echo "<p>Nessuna visita disponibile</p>";
